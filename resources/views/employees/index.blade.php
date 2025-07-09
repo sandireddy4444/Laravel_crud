@@ -3,10 +3,13 @@
 @section('title', 'Employee List')
 
 @section('content')
+
+    <div id="alert-container"></div>
+
     <h1>Employee List</h1>
     <a href="{{ route('employees.create') }}" class="btn btn-primary mb-3">Add Employee</a>
     <table class="table table-bordered">
-        <thead>
+        <thead>     
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -41,7 +44,7 @@
             }
         });
 
-        $('.delete-employee').click(function () {
+        $(document).on('click', '.delete-employee', function () {
             if (confirm('Are you sure you want to delete this employee?')) {
                 var employeeId = $(this).data('id');
                 $.ajax({
@@ -53,7 +56,7 @@
                         // Show success message in DOM
                         $('#alert-container').html(`
                             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                                ${response.success}
+                                ${response.success ? response.success : 'Employee deleted successfully.'}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         `);
