@@ -17,47 +17,47 @@
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name">
+            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description"></textarea>
+            <textarea class="form-control" id="description" name="description" value="{{ old('description') }}"></textarea>
         </div>
         <div class="mb-3">
             <label for="is_active" class="form-label">Active</label>
-            <input type="checkbox" id="is_active" name="is_active" value="1">
+            <input type="checkbox" id="is_active" name="is_active" value="1" value="{{ old('is_active') }}">
         </div>
         <div class="mb-3">
             <label for="gender" class="form-label">Gender</label>
             <select class="form-control" id="gender" name="gender">
                 <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="profile_picture" class="form-label">Profile Picture</label>
-            <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+            <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept=".jpg,.jpeg,.png">
         </div>
         <div class="mb-3">
             <label class="form-label">Preferences</label>
             <div>
-                <input type="checkbox" name="preferences[]" value="newsletter"> Newsletter
-                <input type="checkbox" name="preferences[]" value="updates"> Updates
-                <input type="checkbox" name="preferences[]" value="promotions"> Promotions
+                <input type="checkbox" name="preferences[]" value="newsletter" {{ is_array(old('preferences')) && in_array('newsletter', old('preferences')) ? 'checked' : '' }}> Newsletter
+                <input type="checkbox" name="preferences[]" value="updates" {{ is_array(old('preferences')) && in_array('updates', old('preferences')) ? 'checked' : '' }}> Updates
+                <input type="checkbox" name="preferences[]" value="promotions" {{ is_array(old('preferences')) && in_array('promotions', old('preferences')) ? 'checked' : '' }}> Promotions
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Status</label>
             <div>
-                <input type="radio" name="status" value="full_time" checked> Full Time
-                <input type="radio" name="status" value="part_time"> Part Time
-                <input type="radio" name="status" value="contract"> Contract
+                <input type="radio" name="status" value="full_time" {{ old('status') == 'full_time' ? 'checked' : '' }} checked> Full Time
+                <input type="radio" name="status" value="part_time" {{ old('status') == 'part_time' ? 'checked' : '' }}> Part Time
+                <input type="radio" name="status" value="contract" {{ old('status') == 'contract' ? 'checked' : '' }}> Contract
             </div>
         </div>
         <div class="mb-3">
@@ -65,7 +65,7 @@
             <select class="form-control" id="user_id" name="user_id">
                 <option value="">Select User</option>
                 @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                 @endforeach
             </select>
         </div>
